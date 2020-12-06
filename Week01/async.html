@@ -1,0 +1,75 @@
+<html>
+
+<head>
+    <style>
+        div {
+            background-color: grey;
+            display: inline-block;
+            margin: 30px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50px;
+        }
+
+        .green.light {
+            background-color: green;
+        }
+
+        .yellow.light {
+            background-color: yellow;
+        }
+
+        .red.light {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="green"></div>
+    <div class="yellow"></div>
+    <div class="red"></div>
+
+    <button id="next">next</button>
+
+    <script>
+        function trafficLights(color) {
+            var lights = document.getElementsByTagName("div");
+            for (let i = 0; i < 3; i++) {
+                lights[i].classList.remove("light");
+            }
+            document.getElementsByClassName(color)[0].classList.add("light");
+        }
+        function sleep(t) {
+            return new Promise((resolve, reject) => {
+                setTimeout(resolve, t);
+            });
+        }
+        function happen(element, eventName) {
+            return new Promise((resolve, reject) => {
+                element.addEventListener(eventName, resolve, { once: true })
+            });
+        }
+        async function go() {
+            // while (true) {
+            //     trafficLights('green');
+            //     await sleep(1000);
+            //     trafficLights('yellow');
+            //     await sleep(200);
+            //     trafficLights('red');
+            //     await sleep(500);
+            // }
+            while (true) {
+                trafficLights('green');
+                // await sleep(1000);
+                await happen(document.getElementById("next"), "click");
+                trafficLights('yellow');
+                await happen(document.getElementById("next"), "click");
+                trafficLights('red');
+                await happen(document.getElementById("next"), "click");
+            }
+        }
+    </script>
+</body>
+
+</html>

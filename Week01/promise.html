@@ -1,0 +1,59 @@
+<html>
+
+<head>
+    <style>
+        div {
+            background-color: grey;
+            display: inline-block;
+            margin: 30px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50px;
+        }
+
+        .green.light {
+            background-color: green;
+        }
+
+        .yellow.light {
+            background-color: yellow;
+        }
+
+        .red.light {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="green"></div>
+    <div class="yellow"></div>
+    <div class="red"></div>
+
+    <script>
+        function trafficLights(color) {
+            var lights = document.getElementsByTagName("div");
+            for (let i = 0; i < 3; i++) {
+                lights[i].classList.remove("light");
+            }
+            document.getElementsByClassName(color)[0].classList.add("light");
+        }
+        function sleep(t) {
+            return new Promise((resolve, reject) => {
+                setTimeout(resolve, t);
+            });
+        }
+        function go() {
+            trafficLights('green');
+            sleep(1000).then(() => {
+                trafficLights('yellow');
+                return sleep(200);
+            }).then(() => {
+                trafficLights('red');
+                return sleep(500);
+            }).then(go);
+        }
+    </script>
+</body>
+
+</html>
